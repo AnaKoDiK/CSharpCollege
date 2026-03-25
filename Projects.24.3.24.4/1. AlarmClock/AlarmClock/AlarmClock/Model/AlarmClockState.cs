@@ -33,61 +33,26 @@ namespace AlarmClock.Model
         /// </summary>
         public bool IsAwakeActivated { get; set; }
 
-        /// <summary>
-        /// Время повтора будильника
-        /// </summary>
-        public TimeSpan SnoozeInterval { get; set; } = TimeSpan.FromMinutes(10);
+        public int SnoozeCount { get; private set; } = 0;
 
-        /// <summary>
-        /// Сколько был выполнен повтор будильника
-        /// </summary>
-        public int SnoozeCount { get; set; }
+        public int MaxSnoozeCount { get; } = 3;
 
-        /// <summary>
-        /// Максимальное количество повторов будильника
-        /// </summary>
-        public int MaxSnoozeCount { get; set; } = 2;
+        public bool CanSnooze => SnoozeCount < MaxSnoozeCount;
 
-        /// <summary>
-        /// Проверка срабатывания будильника
-        /// </summary>
-        public void CheckAlarm()
+        public void Snooze(int minutes)
         {
-            if (!IsAlarmActive)
+            if (!CanSnooze)
                 return;
 
-            DateTime now = DateTime.Now;
-
-            if (!IsAwakeActivated && SnoozeCount == 0 && now >= AlarmTime)
-            {
-                IsAwakeActivated = true;
-                return;
-            }
-
-            if (!IsAwakeActivated && SnoozeCount > 0 && SnoozeCount <= MaxSnoozeCount && now >= AlarmTime)
-            {
-                IsAwakeActivated = true;
-            }
+            AlarmTime = DateTime.Now.AddMinutes(minutes);
+            SnoozeCount++;
+            IsAwakeActivated = false;
+            IsAlarmActive = true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public void FinishRinging()
+        public void ResetSnooze()
         {
-            if (SnoozeCount < MaxSnoozeCount)
-            {
-                SnoozeCount++;
-                AlarmTime = DateTime.Now + SnoozeInterval;
-                IsAwakeActivated = false;
-            }
-
-            else
-            {
-                IsAlarmActive = false;
-                IsAwakeActivated = false;
-                SnoozeCount = 0;
-            }
+            SnoozeCount = 0;
         }
     }
 }

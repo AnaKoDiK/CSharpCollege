@@ -40,6 +40,21 @@ namespace AlarmClock.Forms
             AwakePictureBox.Load(_imageFileNames[_imageIndex]);
         }
 
+        private void SnoozeButton_Click(object sender, EventArgs e)
+        {
+            if (!ClockState.CanSnooze)
+            {
+                MessageBox.Show("Лимит отложений исчерпан");
+                SnoozeButton.Enabled = false;
+                return;
+            }
+
+            int minutes = (int)SnoozeMinutes.Value;
+            ClockState.Snooze(minutes);
+
+            this.Close();
+        }
+
         private void AwakeTimer_Tick(object sender, EventArgs e)
         {
             _imageIndex++;

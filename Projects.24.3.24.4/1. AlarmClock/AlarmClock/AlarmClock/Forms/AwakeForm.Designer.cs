@@ -86,6 +86,28 @@
             this.Text = "Просыпайся!";
             this.Load += new System.EventHandler(this.AwakeForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.AwakePictureBox)).EndInit();
+            // 
+            // SnoozeMinutes
+            // 
+            this.SnoozeMinutes = new System.Windows.Forms.NumericUpDown();
+            this.SnoozeMinutes.Location = new System.Drawing.Point(248, 380);
+            this.SnoozeMinutes.Minimum = 1;
+            this.SnoozeMinutes.Maximum = 60;
+            this.SnoozeMinutes.Value = 5;
+            this.SnoozeMinutes.Size = new System.Drawing.Size(118, 20);
+
+            // 
+            // SnoozeButton
+            // 
+            this.SnoozeButton = new System.Windows.Forms.Button();
+            this.SnoozeButton.Location = new System.Drawing.Point(248, 350);
+            this.SnoozeButton.Size = new System.Drawing.Size(118, 23);
+            this.SnoozeButton.Text = "Отложить";
+            this.SnoozeButton.UseVisualStyleBackColor = true;
+            this.SnoozeButton.Click += new System.EventHandler(this.SnoozeButton_Click);
+
+            this.Controls.Add(this.SnoozeButton);
+            this.Controls.Add(this.SnoozeMinutes);
             this.ResumeLayout(false);
 
         }
@@ -96,5 +118,7 @@
         private System.Windows.Forms.Button AwakeButton;
         private System.Windows.Forms.PictureBox AwakePictureBox;
         private System.Windows.Forms.Timer AwakeTimer;
+        private System.Windows.Forms.Button SnoozeButton;
+        private System.Windows.Forms.NumericUpDown SnoozeMinutes;
     }
 }
